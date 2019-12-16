@@ -40,6 +40,15 @@ public class MainActivity extends AppCompatActivity {
     private void enableOrDisableButton(Button button, boolean enabled) {
         button.setEnabled(enabled);
         button.setBackgroundColor(enabled ? ContextCompat.getColor(this, R.color.color_button_enabled) : Color.GRAY);
+        switch (button.getId())
+        {
+            case R.id.button_gps_status:
+                Utils.showSnackbar(findViewById(R.id.mainView), enabled ? "GPS is on" : "GPS is off");
+                break;
+            case R.id.button_internet_status:
+                Utils.showSnackbar(findViewById(R.id.mainView), enabled ? "Internet is on" : "Internet is off");
+                break;
+        }
     }
 
     @Override
