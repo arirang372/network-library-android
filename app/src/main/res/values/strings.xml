@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">NetworkLibrary</string>
+    <string name="wifi_status">Wifi Status</string>
+    <string name="gps_status">GPS Status</string>
+</resources>

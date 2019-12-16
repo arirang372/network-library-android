@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/lb_internet_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        tools:text="@string/wifi_status"
+        android:text="Wifi Status" />
+
+    <Button
+        android:id="@+id/button_internet_status"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/lb_internet_status"
+        android:layout_centerHorizontal="true"
+        android:background="@color/color_button_enabled"
+        android:text="Internet On"
+        tools:text="Internet On" />
+
+    <TextView
+        android:id="@+id/lb_gps_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/button_internet_status"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        tools:text="@string/gps_status"
+        android:text="GPS Status" />
+
+    <Button
+        android:id="@+id/button_gps_status"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/lb_gps_status"
+        android:layout_centerHorizontal="true"
+        android:background="@color/color_button_enabled"
+        android:text="GPS On"
+        tools:text="GPS On" />
+
+</RelativeLayout>
