@@ -1,2 +1,2 @@
-include ':app', ':networklib'
+include ':app', ':networklib', ':networklib-livedata'
 rootProject.name='NetworkLibrary'

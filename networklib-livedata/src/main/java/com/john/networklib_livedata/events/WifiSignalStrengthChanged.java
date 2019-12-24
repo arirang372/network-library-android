@@ -1,4 +1,4 @@
-package com.john.networklib.events;
+package com.john.networklib_livedata.events;
 
 import java.util.List;
 
@@ -6,10 +6,10 @@ import android.content.Context;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 
-import com.john.networklib.networkLogger.NetLogger;
+import com.john.networklib_livedata.logger.NetLogger;
 
 /**
- * Created by john on 12/13/2015.
+ * Created by John Sung on 12/13/2015.
  */
 public final class WifiSignalStrengthChanged {
 

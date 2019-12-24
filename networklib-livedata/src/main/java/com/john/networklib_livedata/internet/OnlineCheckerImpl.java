@@ -1,14 +1,14 @@
-package com.john.networklib.internet;
+package com.john.networklib_livedata.internet;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.john.networklib.receivers.InternetConnectionChangeReceiver;
+import com.john.networklib_livedata.receivers.InternetConnectionChangeReceiver;
 
 /**
- * Created by john on 12/13/2015.
+ * @author John Sung on 12/13/2015.
  */
 public final class OnlineCheckerImpl implements OnlineChecker {
 

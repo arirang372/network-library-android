@@ -33,7 +33,7 @@ public final class NetworkConnectionChangeReceiver extends BaseBroadcastReceiver
         onPostReceive(getConnectivityStatus(context));
     }
 
-    public void onPostReceive(final ConnectivityStatus connectivityStatus) {
+    private void onPostReceive(final ConnectivityStatus connectivityStatus) {
         if (statusNotChanged(connectivityStatus)) {
             return;
         }

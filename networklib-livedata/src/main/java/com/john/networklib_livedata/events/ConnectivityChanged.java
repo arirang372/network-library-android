@@ -1,11 +1,11 @@
-package com.john.networklib.events;
+package com.john.networklib_livedata.events;
 
 import android.content.Context;
 import android.telephony.TelephonyManager;
 
-import com.john.networklib.ConnectivityStatus;
-import com.john.networklib.MobileNetworkType;
-import com.john.networklib.networkLogger.NetLogger;
+import com.john.networklib_livedata.ConnectivityStatus;
+import com.john.networklib_livedata.MobileNetworkType;
+import com.john.networklib_livedata.logger.NetLogger;
 
 /**
  * Created by john on 12/13/2015.

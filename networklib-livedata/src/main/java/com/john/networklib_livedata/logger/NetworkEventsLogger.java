@@ -1,4 +1,4 @@
-package com.john.networklib.networkLogger;
+package com.john.networklib_livedata.logger;
 
 import android.util.Log;
 

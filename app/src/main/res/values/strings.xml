@@ -2,4 +2,8 @@
     <string name="app_name">NetworkLibrary</string>
     <string name="wifi_status">Wifi Status</string>
     <string name="gps_status">GPS Status</string>
+    <string name="internet_on">Internet On</string>
+    <string name="internet_off">Internet Off</string>
+    <string name="gps_on">GPS On</string>
+    <string name="gps_off">GPS Off</string>
 </resources>

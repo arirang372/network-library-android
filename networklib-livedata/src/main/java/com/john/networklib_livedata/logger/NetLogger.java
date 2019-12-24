@@ -1,4 +1,4 @@
-package com.john.networklib.networkLogger;
+package com.john.networklib_livedata.logger;
 
 /**
  * Created by John Sung on 12/13/2015.

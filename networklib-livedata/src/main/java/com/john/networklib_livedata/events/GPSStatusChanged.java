@@ -1,7 +1,7 @@
-package com.john.networklib.events;
+package com.john.networklib_livedata.events;
 
-import com.john.networklib.GPSStatus;
-import com.john.networklib.networkLogger.NetLogger;
+import com.john.networklib_livedata.GPSStatus;
+import com.john.networklib_livedata.logger.NetLogger;
 
 /**
  * Created by john on 4/11/2016.
