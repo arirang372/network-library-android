@@ -1,6 +1,7 @@
 package com.john.networklibrary;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +29,16 @@ public class NetworkActivity extends AppCompatActivity {
 		viewModel = obtainViewModel(this);
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				onBackPressed();
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
 	private void setupFragment() {
 		NetworkFragment fragment = (NetworkFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
 		if (fragment == null) {
@@ -44,5 +55,4 @@ public class NetworkActivity extends AppCompatActivity {
 		ActionBar ab = getSupportActionBar();
 		ab.setDisplayHomeAsUpEnabled(true);
 	}
-
 }

@@ -10,6 +10,7 @@ import com.john.networklib_livedata.NetworkEvents;
 import com.john.networklib_livedata.events.SnackbarMessageEvent.SnackbarObserver;
 import com.john.networklibrary.databinding.FragmentNetworkBinding;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
@@ -32,11 +33,12 @@ public class NetworkFragment extends Fragment {
 		setupSnackbar();
 		events = new NetworkEvents(getActivity());
 		events.enableWifiScan();
-		setupNetwork();
+		setupNetworkChangedEvent();
+		setUpGpsChangedEvent();
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		mFragmentNetworkBinding = FragmentNetworkBinding.inflate(inflater, container, false);
 		viewModel = NetworkActivity.obtainViewModel(getActivity());
 		mFragmentNetworkBinding.setViewModel(viewModel);
@@ -48,7 +50,7 @@ public class NetworkFragment extends Fragment {
 		super.onStart();
 		events.register();
 		events.checkIfGpsStatusHasChanged();
-		viewModel.gpsStatusText.set(events.getCurrentGPSStatus() ? "GPS is on" : "GPS is off");
+		viewModel.setGpsStatusText(events.getCurrentGPSStatus());
 	}
 
 	@Override
@@ -57,37 +59,27 @@ public class NetworkFragment extends Fragment {
 		events.unregister();
 	}
 
-	private void setupNetwork() {
+	private void setUpGpsChangedEvent() {
+		events.getGpsLiveEvent().observe(this, new Observer<Boolean>() {
+			@Override
+			public void onChanged(Boolean gpsOn) {
+				viewModel.setGpsStatusText(gpsOn);
+			}
+		});
+	}
+
+	private void setupNetworkChangedEvent() {
 		events.getNetworkConnectionChangedEvent().observe(this, new Observer<ConnectivityStatus>() {
 			@Override
 			public void onChanged(ConnectivityStatus connectivityStatus) {
-				if (connectivityStatus == com.john.networklib_livedata.ConnectivityStatus.OFFLINE ||
-						connectivityStatus == com.john.networklib_livedata.ConnectivityStatus.WIFI_CONNECTED_HAS_NO_INTERNET ||
-						connectivityStatus == com.john.networklib_livedata.ConnectivityStatus.UNKNOWN) {
-					viewModel.internetStatusText.set("Internet is off");
-				} else {
-					viewModel.internetStatusText.set("Internet is on");
-				}
+				viewModel.setInternetStatusText(connectivityStatus);
 			}
 		});
 
 		events.getInternetConnectionChangedEvent().observe(this, new Observer<ConnectivityStatus>() {
 			@Override
 			public void onChanged(ConnectivityStatus connectivityStatus) {
-				if (connectivityStatus == com.john.networklib_livedata.ConnectivityStatus.OFFLINE ||
-						connectivityStatus == com.john.networklib_livedata.ConnectivityStatus.WIFI_CONNECTED_HAS_NO_INTERNET ||
-						connectivityStatus == com.john.networklib_livedata.ConnectivityStatus.UNKNOWN) {
-					viewModel.internetStatusText.set("Internet is off");
-				} else {
-					viewModel.internetStatusText.set("Internet is on");
-				}
-			}
-		});
-
-		events.getGpsLiveEvent().observe(this, new Observer<Boolean>() {
-			@Override
-			public void onChanged(Boolean gpsOn) {
-				viewModel.gpsStatusText.set(gpsOn ? "GPS is on" : "GPS is off");
+				viewModel.setInternetStatusText(connectivityStatus);
 			}
 		});
 	}
