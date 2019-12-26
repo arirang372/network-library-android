@@ -1,0 +1,10 @@
+
+Tsquid:S2696"6Make the enclosing method "static" or remove this set.(’„¥œ8³ÄŠ—ô-
+Ssquid:S2209)"5Change this instance-reference to a static reference.(¾ò¸Ö8³ÄŠ—ô-
+Ysquid:S2696%"6Make the enclosing method "static" or remove this set.(óÚùÿÿÿÿ8³ÄŠ—ô-
+Ysquid:S2696"6Make the enclosing method "static" or remove this set.(§çÄùøÿÿÿÿ8³ÄŠ—ô-
+Xsquid:S2209%"5Change this instance-reference to a static reference.(óÚùÿÿÿÿ8³ÄŠ—ô-
+‚squid:S3252)"dUse static access with "com.john.networklib.receivers.BaseBroadcastReceiver" for "currentGPSStatus".(¾ò¸Ö8³ÄŠ—ô-
+jsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(È€æ‰
+osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(â÷ñˆûÿÿÿÿ
+‡squid:S3252%"dUse static access with "com.john.networklib.receivers.BaseBroadcastReceiver" for "currentGPSStatus".(óÚùÿÿÿÿ8³ÄŠ—ô-

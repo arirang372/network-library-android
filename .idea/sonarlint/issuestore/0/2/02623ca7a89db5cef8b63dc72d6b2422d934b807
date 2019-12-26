@@ -1,0 +1,9 @@
+
+ysquid:S00116"\Rename this field "button_gps_status" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æªøÿÿÿÿ
+`squid:S1126\"BReplace this if-then-else statement by a single method invocation.(©Ú«°8à´íÁó-
+€squid:S00116"aRename this field "button_internet_status" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¯ååó8à´íÁó-
+nsquid:S1301#"KReplace this "switch" statement by "if" statements to increase readability.(ñ¦·‚şÿÿÿÿ8à´íÁó-
+lsquid:MaximumInheritanceDepth"<This class has 6 parents which is greater than 5 authorized.(²Ú±8¾ßı—ô-
+esquid:S1126Q"BReplace this if-then-else statement by a single method invocation.(Æğ»¸øÿÿÿÿ8à´íÁó-
+\"squid:SwitchLastCaseIsDefaultCheck#""Add a default case to this switch.(ñ¦·‚şÿÿÿÿ8à´íÁó-
+`squid:S1126g"BReplace this if-then-else statement by a single method invocation.(°çè¶8Ë§Š™ô-
