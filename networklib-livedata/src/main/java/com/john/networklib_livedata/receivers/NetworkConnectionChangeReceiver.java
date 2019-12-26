@@ -6,23 +6,24 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import com.john.networklib_livedata.ConnectivityStatus;
+import com.john.networklib_livedata.events.ConnectivityLiveEvent;
 import com.john.networklib_livedata.internet.OnlineChecker;
 import com.john.networklib_livedata.logger.NetLogger;
-
-import androidx.lifecycle.MutableLiveData;
 
 /**
  * Created by john on 12/13/2015.
  */
 public final class NetworkConnectionChangeReceiver extends BaseBroadcastReceiver {
 
+	private static final String EVENT_NAME = NetworkConnectionChangeReceiver.class.getSimpleName();
 	private boolean internetCheckEnabled = false;
 	private final OnlineChecker onlineChecker;
 
-	public NetworkConnectionChangeReceiver(MutableLiveData<Object> eventWrapper, NetLogger netLogger, Context context,
+	public NetworkConnectionChangeReceiver(ConnectivityLiveEvent event, NetLogger netLogger, Context context,
 			OnlineChecker onlineChecker) {
-		super(eventWrapper, netLogger, context);
+		super(netLogger, context);
 		this.onlineChecker = onlineChecker;
+		addEvent(NetworkConnectionChangeReceiver.class.getSimpleName(), event);
 	}
 
 	public void enableInternetCheck() {
@@ -55,7 +56,7 @@ public final class NetworkConnectionChangeReceiver extends BaseBroadcastReceiver
 		if (internetCheckEnabled && isConnectedToWifi) {
 			onlineChecker.check();
 		} else {
-			postConnectivityChanged(connectivityStatus);
+			postConnectivityChanged(EVENT_NAME, connectivityStatus);
 		}
 	}
 

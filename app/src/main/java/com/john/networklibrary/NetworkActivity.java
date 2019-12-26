@@ -28,16 +28,6 @@ public class NetworkActivity extends AppCompatActivity {
 		viewModel = obtainViewModel(this);
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-	}
-
 	private void setupFragment() {
 		NetworkFragment fragment = (NetworkFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
 		if (fragment == null) {

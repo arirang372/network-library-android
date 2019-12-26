@@ -1,4 +1,4 @@
-package com.john.networklib;
+package com.john.networklib_livedata;
 
 import java.util.Objects;
 
@@ -9,59 +9,65 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 
-import com.john.networklib.internet.OnlineCheckerImpl;
-import com.john.networklib.networkLogger.NetLogger;
-import com.john.networklib.networkLogger.NetworkEventsLogger;
-import com.john.networklib.receivers.GPSStatusChangeReceiver;
-import com.john.networklib.receivers.InternetConnectionChangeReceiver;
-import com.john.networklib.receivers.NetworkConnectionChangeReceiver;
-import com.john.networklib.receivers.WifiSignalStrengthChangeReceiver;
+import com.john.networklib_livedata.events.ConnectivityLiveEvent;
+import com.john.networklib_livedata.events.GpsLiveEvent;
+import com.john.networklib_livedata.internet.OnlineCheckerImpl;
+import com.john.networklib_livedata.logger.NetLogger;
+import com.john.networklib_livedata.logger.NetworkEventsLogger;
+import com.john.networklib_livedata.receivers.GPSStatusChangeReceiver;
+import com.john.networklib_livedata.receivers.InternetConnectionChangeReceiver;
+import com.john.networklib_livedata.receivers.NetworkConnectionChangeReceiver;
 
 /**
- * Created by john on 12/13/2015.
+ *
+ * @author John Sung, 12/26/2019
  */
 public final class NetworkEvents {
 
 	private final Context context;
+	private final GpsLiveEvent gpsLiveEvent = new GpsLiveEvent();
 	private final GPSStatusChangeReceiver gpsStatusChangeReceiver;
 	private final InternetConnectionChangeReceiver internetConnectionChangeReceiver;
+	private final ConnectivityLiveEvent internetConnectionChangedEvent = new ConnectivityLiveEvent();
 	private boolean isReceiverRegistered;
 	private final NetworkConnectionChangeReceiver networkConnectionChangeReceiver;
+	//private final WifiSignalStrengthChangeReceiver wifiSignalStrengthChangeReceiver;
+	private final ConnectivityLiveEvent networkConnectionChangedEvent = new ConnectivityLiveEvent();
 	private boolean wifiAccessPointsScanEnabled = false;
-	private final WifiSignalStrengthChangeReceiver wifiSignalStrengthChangeReceiver;
 
 	/**
 	 * initializes NetworkEvents object
 	 * with NetworkEventsLogger as default netLogger
 	 *
 	 * @param context Android context
-	 * @param busWrapper Wrapper for event bus
 	 */
-	public NetworkEvents(Context context, NetworkBusWrapper busWrapper) {
-		this(context, busWrapper, new NetworkEventsLogger());
+	public NetworkEvents(Context context) {
+		this(context, new NetworkEventsLogger());
 	}
 
 	/**
 	 * initializes NetworkEvents object
 	 *
 	 * @param context Android context
-	 * @param networkBusWrapper Wrapper fo event bus
 	 * @param netLogger message netLogger (NetworkEventsLogger logs messages to LogCat)
 	 */
-	public NetworkEvents(Context context, NetworkBusWrapper networkBusWrapper, NetLogger netLogger) {
+	public NetworkEvents(Context context, NetLogger netLogger) {
 		Objects.requireNonNull(context);
-		Objects.requireNonNull(networkBusWrapper);
 		Objects.requireNonNull(netLogger);
 		this.context = context;
 		this.networkConnectionChangeReceiver =
-				new NetworkConnectionChangeReceiver(networkBusWrapper, netLogger, context, new OnlineCheckerImpl(context));
+				new NetworkConnectionChangeReceiver(networkConnectionChangedEvent, netLogger, context, new OnlineCheckerImpl(context));
 		this.internetConnectionChangeReceiver =
-				new InternetConnectionChangeReceiver(networkBusWrapper, netLogger, context);
-		this.wifiSignalStrengthChangeReceiver =
-				new WifiSignalStrengthChangeReceiver(networkBusWrapper, netLogger, context);
+				new InternetConnectionChangeReceiver(internetConnectionChangedEvent, netLogger, context);
+//		this.wifiSignalStrengthChangeReceiver =
+//				new WifiSignalStrengthChangeReceiver(networkBusWrapper, netLogger, context);
 
-		this.gpsStatusChangeReceiver =
-				new GPSStatusChangeReceiver(networkBusWrapper, netLogger, context);
+		this.gpsStatusChangeReceiver = new GPSStatusChangeReceiver(gpsLiveEvent, netLogger, context);
+
+		if (isGPSOn(context))
+			this.gpsStatusChangeReceiver.setGPSStatus(GPSStatus.GPS_ON);
+		else
+			this.gpsStatusChangeReceiver.setGPSStatus(GPSStatus.GPS_OFF);
 	}
 
 	public void checkIfGpsStatusHasChanged() {
@@ -96,8 +102,20 @@ public final class NetworkEvents {
 		return this;
 	}
 
-	public GPSStatus getCurrentGPSStatus() {
-		return gpsStatusChangeReceiver.getGPSStatus();
+	public boolean getCurrentGPSStatus() {
+		return gpsStatusChangeReceiver.getGPSStatus() == GPSStatus.GPS_ON;
+	}
+
+	public GpsLiveEvent getGpsLiveEvent() {
+		return this.gpsLiveEvent;
+	}
+
+	public ConnectivityLiveEvent getInternetConnectionChangedEvent() {
+		return this.internetConnectionChangedEvent;
+	}
+
+	public ConnectivityLiveEvent getNetworkConnectionChangedEvent() {
+		return this.networkConnectionChangedEvent;
 	}
 
 	private boolean isGPSOn(Context context) {
@@ -117,10 +135,10 @@ public final class NetworkEvents {
 		registerNetworkConnectionChangeReceiver();
 		registerInternetConnectionChangeReceiver();
 		registerGpsStatusReceiver();
-		//registerGpsStatusChangeReceiver();
+		registerGpsStatusChangeReceiver();
 
 		if (wifiAccessPointsScanEnabled) {
-			registerWifiSignalStrengthChangeReceiver();
+			//registerWifiSignalStrengthChangeReceiver();
 			// start WiFi scan in order to refresh access point list
 			// if this won't be called WifiSignalStrengthChanged may never occur
 			WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
@@ -130,11 +148,11 @@ public final class NetworkEvents {
 		isReceiverRegistered = true;
 	}
 
-//	private void registerGpsStatusChangeReceiver() {
-//		IntentFilter filter = new IntentFilter();
-//		filter.addAction(GPSStatusChangeReceiver.INTENT);
-//		context.registerReceiver(gpsStatusChangeReceiver, filter);
-//	}
+	private void registerGpsStatusChangeReceiver() {
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(GPSStatusChangeReceiver.INTENT);
+		context.registerReceiver(gpsStatusChangeReceiver, filter);
+	}
 
 	private void registerGpsStatusReceiver() {
 		IntentFilter filter = new IntentFilter();
@@ -156,10 +174,10 @@ public final class NetworkEvents {
 		context.registerReceiver(networkConnectionChangeReceiver, filter);
 	}
 
-	private void registerWifiSignalStrengthChangeReceiver() {
-		IntentFilter filter = new IntentFilter(WifiManager.RSSI_CHANGED_ACTION);
-		context.registerReceiver(wifiSignalStrengthChangeReceiver, filter);
-	}
+//	private void registerWifiSignalStrengthChangeReceiver() {
+//		IntentFilter filter = new IntentFilter(WifiManager.RSSI_CHANGED_ACTION);
+//		context.registerReceiver(wifiSignalStrengthChangeReceiver, filter);
+//	}
 
 	/**
 	 * unregisters NetworkEvents
@@ -172,9 +190,9 @@ public final class NetworkEvents {
 		context.unregisterReceiver(networkConnectionChangeReceiver);
 		context.unregisterReceiver(internetConnectionChangeReceiver);
 		context.unregisterReceiver(gpsStatusChangeReceiver);
-		if (wifiAccessPointsScanEnabled) {
-			context.unregisterReceiver(wifiSignalStrengthChangeReceiver);
-		}
+//		if (wifiAccessPointsScanEnabled) {
+//			context.unregisterReceiver(wifiSignalStrengthChangeReceiver);
+//		}
 		isReceiverRegistered = false;
 	}
 }

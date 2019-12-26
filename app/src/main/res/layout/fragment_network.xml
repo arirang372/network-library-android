@@ -1,58 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="viewModel"
             type="com.john.networklibrary.NetworkViewModel" />
     </data>
 
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/lb_internet_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="100dp"
-                android:text="Wifi Status"
-                tools:text="@string/wifi_status" />
+        <TextView
+            android:id="@+id/lb_internet_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:text="Wifi Status"
+            tools:text="@string/wifi_status" />
 
-            <Button
-                android:id="@+id/button_internet_status"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/lb_internet_status"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:background="@color/color_button_enabled"
-                android:text="@{viewModel.internetStatusText}"
-                tools:text="Internet On" />
+        <Button
+            android:id="@+id/button_internet_status"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lb_internet_status"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@color/color_button_enabled"
+            android:text="@{viewModel.internetStatusText}"
+            tools:text="Internet On" />
 
-            <TextView
-                android:id="@+id/lb_gps_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/button_internet_status"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="20dp"
-                android:text="GPS Status"
-                tools:text="@string/gps_status" />
+        <TextView
+            android:id="@+id/lb_gps_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/button_internet_status"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="20dp"
+            android:text="GPS Status"
+            tools:text="@string/gps_status" />
 
-            <Button
-                android:id="@+id/button_gps_status"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/lb_gps_status"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:background="@color/color_button_enabled"
-                android:text="@{viewModel.gpsStatusText}"
-                tools:text="GPS On" />
+        <Button
+            android:id="@+id/button_gps_status"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lb_gps_status"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@color/color_button_enabled"
+            android:text="@{viewModel.gpsStatusText}"
+            tools:text="GPS On" />
 
-        </RelativeLayout>
+    </RelativeLayout>
 </layout>

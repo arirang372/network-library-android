@@ -20,7 +20,6 @@ public class NetworkViewModel extends AndroidViewModel {
 		super(application);
 		mContext = application.getApplicationContext();
 	}
-
 	SnackbarMessageEvent getSnackbarMessageEvent() {
 		return mSnackbarMessageEvent;
 	}

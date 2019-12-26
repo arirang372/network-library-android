@@ -15,12 +15,14 @@ import com.john.networklib_livedata.logger.NetLogger;
 
 public final class InternetConnectionChangeReceiver extends BaseBroadcastReceiver {
 
+	private static final String EVENT_NAME = InternetConnectionChangeReceiver.class.getSimpleName();
 	public final static String INTENT =
 			"networkevents.intent.action.INTERNET_CONNECTION_STATE_CHANGED";
 	public final static String INTENT_EXTRA = "networkevents.intent.extra.CONNECTED_TO_INTERNET";
 
-	public InternetConnectionChangeReceiver(ConnectivityLiveEvent eventWrapper, NetLogger netLogger, Context context) {
-		super(eventWrapper, netLogger, context);
+	public InternetConnectionChangeReceiver(ConnectivityLiveEvent event, NetLogger netLogger, Context context) {
+		super(netLogger, context);
+		addEvent(EVENT_NAME, event);
 	}
 
 	private boolean isConnectedToWifi(Context context) {
@@ -46,7 +48,7 @@ public final class InternetConnectionChangeReceiver extends BaseBroadcastReceive
 		if (context != null && !isConnectedToWifi(context)) {
 			return;
 		}
-		postConnectivityChanged(connectivityStatus);
+		postConnectivityChanged(EVENT_NAME, connectivityStatus);
 	}
 
 	@Override

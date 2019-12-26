@@ -97,13 +97,21 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	@Override
+	public void onResume() {
+		super.onResume();
+		networkEvents.checkIfGpsStatusHasChanged();
+		if (networkEvents.getCurrentGPSStatus() == GPSStatus.GPS_OFF) {
+			enableOrDisableButton(button_gps_status, false);
+		} else {
+			enableOrDisableButton(button_gps_status, true);
+		}
+	}
+
+	@Override
 	public void onStart() {
 		super.onStart();
 		networkBusWrapper.register(this);
 		networkEvents.register();
-		if (networkEvents.getCurrentGPSStatus() == GPSStatus.GPS_OFF) {
-			enableOrDisableButton(button_gps_status, false);
-		}
 	}
 
 	@Override

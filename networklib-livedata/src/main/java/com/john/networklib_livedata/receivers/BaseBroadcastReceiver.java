@@ -1,14 +1,15 @@
 package com.john.networklib_livedata.receivers;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Looper;
 
 import com.john.networklib_livedata.ConnectivityStatus;
-import com.john.networklib_livedata.GPSStatus;
 import com.john.networklib_livedata.NetworkState;
-import com.john.networklib_livedata.events.ConnectivityChanged;
 import com.john.networklib_livedata.events.SingleLiveEvent;
 import com.john.networklib_livedata.logger.NetLogger;
 
@@ -18,30 +19,45 @@ import com.john.networklib_livedata.logger.NetLogger;
  */
 public abstract class BaseBroadcastReceiver extends BroadcastReceiver {
 
-	protected static GPSStatus currentGPSStatus;
-	private final Context context;
-	private final SingleLiveEvent eventWrapper;
+	//protected static GPSStatus currentGPSStatus;
+	protected static final Map<String, SingleLiveEvent> events = new ConcurrentHashMap<>();
+	protected final Context context;
 	protected final NetLogger netLogger;
 
-	public BaseBroadcastReceiver(SingleLiveEvent eventWrapper, NetLogger logger, Context context) {
-		this.eventWrapper = eventWrapper;
+	public BaseBroadcastReceiver(NetLogger logger, Context context) {
 		this.netLogger = logger;
 		this.context = context;
+	}
+
+	public void addEvent(String className, SingleLiveEvent liveEvent) {
+		if (liveEvent == null)
+			return;
+		if (!events.containsKey(liveEvent.getClass()))
+			this.events.put(className, liveEvent);
+	}
+
+	public SingleLiveEvent getEvent(String className) {
+		if (events.containsKey(className))
+			return events.get(className);
+		return null;
 	}
 
 	@Override
 	public abstract void onReceive(Context context, Intent intent);
 
-	protected void postConnectivityChanged(ConnectivityStatus connectivityStatus) {
+	protected void postConnectivityChanged(String eventName, ConnectivityStatus connectivityStatus) {
 		NetworkState.status = connectivityStatus;
-		postFromAnyThread(new ConnectivityChanged(connectivityStatus, netLogger, context));
+		SingleLiveEvent event = getEvent(eventName);
+		if (event == null)
+			return;
+		postFromAnyThread(event, connectivityStatus);
 	}
 
-	protected void postFromAnyThread(final Object event) {
+	protected void postFromAnyThread(SingleLiveEvent event, Object object) {
 		if (Looper.myLooper() == Looper.getMainLooper()) {
-			eventWrapper.setValue(event);
+			event.setValue(object);
 		} else {
-			eventWrapper.postValue(event);
+			event.postValue(object);
 		}
 	}
 
