@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+def githubPropertiesFile = rootProject.file("github.properties")
+def githubProperties = new Properties()
+githubProperties.load(new FileInputStream(githubPropertiesFile))
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -21,6 +25,21 @@ android {
     dataBinding {
         enabled = true
     }
+
+    repositories {
+        maven {
+            name = "NetworkAndroidLibrary"
+            /** Configure path of your package repository on Github
+             *  Replace GITHUB_USERID with your/organisation Github userID and REPOSITORY with the repository name on GitHub
+             */
+            url = uri("https://maven.pkg.github.com/arirang372/network-library-android")
+
+            credentials {
+                username = System.getenv("GPR_USER") ?: githubProperties['gpr.usr']
+                password = System.getenv("GPR_API_KEY") ?: githubProperties['gpr.key']
+            }
+        }
+    }
 }
 
 dependencies {
@@ -35,6 +54,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation project(':networklib')
-    implementation project(':networklib-livedata')
+    implementation 'com.john.networklib_livedata:networklib-livedata:1.0.0'
+    //implementation project(':networklib-livedata')
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
 }

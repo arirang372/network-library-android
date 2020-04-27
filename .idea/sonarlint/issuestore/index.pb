@@ -29,8 +29,6 @@ o
 ?app/src/main/java/com/john/networklibrary/ViewModelFactory.java,1\1\1148d0ba997977bf4cd5e68397c836fb7115fd74
 P
  networklib-livedata/build.gradle,2\6\2689208c8abc61d71aee60e2fdf6733795877979
-ã
-[networklib-livedata/src/main/java/com/john/networklib_livedata/events/GPSStatusChanged.java,a\0\a06f228f80325e1e9c8b0cd88b458d17fc66c8ef
 î
 dnetworklib-livedata/src/main/java/com/john/networklib_livedata/events/WifiSignalStrengthChanged.java,5\6\563cdcaaacdf6ca0844b5a31db614f0c5a73a4a0
 é
@@ -49,8 +47,6 @@ Cnetworklib/src/main/java/com/john/networklib/NetworkBusWrapper.java,c\3\c3407e
 [networklib/src/main/java/com/john/networklib/receivers/NetworkConnectionChangeReceiver.java,5\5\5579e466ccaf3a9da6fef585f6cc4923120b1cd4
 |
 Lnetworklib/src/main/java/com/john/networklib/events/ConnectivityChanged.java,4\0\4080b6b785369b7332229f0ce694109091d16d82
-é
-^networklib-livedata/src/main/java/com/john/networklib_livedata/events/ConnectivityChanged.java,c\c\cc14eaf3fc4e882fe0d59d0f31e9ea996ddd57e8
 Ü
 Vnetworklib-livedata/src/main/java/com/john/networklib_livedata/ConnectivityStatus.java,c\9\c9f135b4464ba3c0428533b731b4553e3d299e07
 ê
