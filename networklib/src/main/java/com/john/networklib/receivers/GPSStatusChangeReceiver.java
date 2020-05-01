@@ -3,7 +3,6 @@ package com.john.networklib.receivers;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
-import android.widget.Toast;
 
 import com.john.networklib.GPSStatus;
 import com.john.networklib.NetworkBusWrapper;
@@ -22,8 +21,6 @@ public class GPSStatusChangeReceiver extends BaseBroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context, "GPS Status has changed ...", Toast.LENGTH_LONG).show();
-
         if (isGPSOn(context)) {
             currentGPSStatus = GPSStatus.GPS_ON;
         } else {
